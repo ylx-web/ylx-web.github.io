@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>依恋馨の小窝</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #5c6bc0;
+            --secondary-color: #7e57c2;
+            --miku-color: #39c5bb;
+            --accent-color: #ffb74d;
+            --light-bg: #f8f6ff;
+            --dark-bg: #2a2166;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #473f8f 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 头部设计 */
+        .header {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: var(--miku-color);
+            z-index: 2;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 3;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .tag {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        /* 头像区域 */
+        .avatar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px auto;
+            max-width: 900px;
+            width: 100%;
+            padding: 0 20px;
+        }
+        
+        .avatar-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+        }
+        
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, var(--accent-color), #ff7043);
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 70px;
+            color: white;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+            border: 5px solid white;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .avatar-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="100" cy="100" r="95" fill="none" stroke="%2339c5bb" stroke-width="5" stroke-dasharray="10 5"/></svg>');
+            animation: rotate 20s linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 内容区域 */
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 30px;
+        }
+        
+        .section {
+            background: var(--light-bg);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 3px solid var(--primary-color);
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .miku-section {
+            background: var(--miku-color);
+            color: white;
+            border-top: 3px solid #1b9189;
+        }
+        
+        .section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .miku-section h2 {
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        /* 状态标签 */
+        .status-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .status {
+            background: rgba(255,255,255,0.7);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .miku-section .status {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        /* 列表样式 */
+        .info-list {
+            list-style: none;
+        }
+        
+        .info-list li {
+            margin-bottom: 15px;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .info-list i {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        /* 特色区段 */
+        .feature-block {
+            grid-column: 1 / -1;
+            background: linear-gradient(to right, #e1bee7, #b2ebf2);
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            text-align: center;
+        }
+        
+        .feature-block h2 {
+            font-size: 1.8rem;
+            color: #4a148c;
+            border: none;
+            margin-bottom: 10px;
+        }
+        
+        .highlight {
+            background: linear-gradient(transparent 65%, var(--accent-color) 65%);
+            font-weight: 700;
+            padding: 0 5px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .avatar-container {
+                width: 170px;
+                height: 170px;
+            }
+            
+            .avatar {
+                width: 150px;
+                height: 150px;
+                font-size: 60px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px 10px;
+            }
+            
+            .tags {
+                gap: 6px;
+            }
+            
+            .tag {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+            
+            .content {
+                padding: 20px 15px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .feature-block {
+                padding: 20px 15px;
+            }
+        }
+        
+        /* 页脚设计 */
+        .footer {
+            background: linear-gradient(90deg, var(--dark-bg) 0%, var(--primary-color) 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: var(--miku-color);
+        }
+        
+        .footer h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .contact-btn {
+            background: var(--miku-color);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .contact-btn:hover {
+            background: #2eb3a9;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>依恋馨の小窝</h1>
+                <div class="tags">
+                    <div class="tag">INFP-A</div>
+                    <div class="tag">双鱼座 ♓️</div>
+                    <div class="tag">IP: 中国</div>
+                    <div class="tag">在读中学生</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 头像区域 -->
+        <div class="avatar-section">
+            <div class="avatar-container">
+                <div class="avatar-bg"></div>
+                <div class="avatar">
+                    <img src="ylx.jpg" alt="依恋馨"
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content">
+            <!-- 状态说明 -->
+            <div class="section">
+                <h2><i class="fas fa-sync-alt"></i> About me</h2>
+                <div class="status-container">
+                    <div class="status"><i class="fas fa-bed"></i> 上学会躺列</div>
+                    <div class="status"><i class="fas fa-thumbs-up"></i> mz秒赞常开</div>
+                    <div class="status"><i class="fas fa-arrows-alt-h"></i> 二三次不分号</div>
+                    <div class="status"><i class="fas fa-plus-circle"></i> 入列≠帮拒</div>
+                    <div class="status"><i class="fas fa-exclamation-triangle"></i> 负面不预警</div>
+                    <div class="status"><i class="fas fa-share-alt"></i> 转扩图≠自身属性</div>
+                </div>
+            </div>
+            
+            <!-- 番剧 -->
+            <div class="section">
+                <h2><i class="fas fa-film"></i> 番剧</h2>
+                <ul class="info-list">
+                    <li><i class="fas fa-user-secret"></i> 间谍过家家</li>
+                    <li><i class="fas fa-guitar"></i> 孤独摇滚！</li>
+                    <li><i class="fas fa-user-friends"></i> 别当欧尼酱了</li>
+                </ul>
+            </div>
+                        <!-- 游戏 -->
+            <div class="section">
+                <h2><i class="fas fa-gamepad"></i> 游戏</h2>
+                <ul class="info-list">
+                    <li><i class="fas fa-cubes"></i> 我的世界 (MC)</li>
+                    <li><i class="fas fa-dove"></i> 光遇</li>
+                    <li><i class="fas fa-hourglass-half"></i> (很多游戏 <span class="highlight">淡游</span>了...)</li>
+                </ul>
+            </div>
+            
+            <!-- 初音未来风格区域 - 使用指定的#39c5bb颜色 -->
+            <div class="section miku-section">
+                <h2><i class="fas fa-heart"></i> 主推角色</h2>
+                <ul class="info-list">
+                    <li><i class="fas fa-guitar"></i> <span class="highlight">山田涼</span> </li>
+                    <li><i class="fas fa-exclamation-circle"></i> 雷点: <span class="highlight">大众雷</span></li>
+                    <li><i class="fas fa-headphones"></i> 超喜欢<span class="highlight">听音乐</span>! 😋</li>
+                </ul>
+            </div>
+            
+            <!-- 关于我 -->
+            <div class="feature-block">
+                <h2><i class="fas fa-user"></i> 关于我</h2>
+                <p style="font-size: 18px; line-height: 1.7;">
+                    <span class="highlight">此网站归依恋馨所有</span>，你喜欢我=我超级喜欢你<span class="highlight">网络真是太有趣了</span>）
+                </p>
+                <p style="font-size: 17px; font-weight: 600; color: #4a148c;">
+                    🌱 有事随时QQ小窗，欢迎来找我玩! 🌱
+                </p>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <div class="footer">
+            <div class="footer-content">
+                <h3>欢迎来到依恋馨的个人网站</h3>
+                <p>很高兴认识你，在互联网的海洋中相遇~</p>
+                <button class="contact-btn">
+                    <i class="fas fa-comment-dots"></i> 随时找我聊天
+                </button>
+                <p style="margin-top: 20px; font-size: 14px; opacity: 0.8;">
+                    2025年10月&依恋馨
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
